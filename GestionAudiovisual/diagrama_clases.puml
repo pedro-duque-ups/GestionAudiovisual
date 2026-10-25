@@ -1,0 +1,75 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Detallable {
+  +mostrarFicha()
+  +mostrarDetallesGenerales()
+  +mostrarDetallesEspecificos()
+}
+
+abstract class ContenidoAudiovisual {
+  -titulo: String
+  -anio: int
+  -duracionMinutos: int
+  +mostrarDetalles()
+  +obtenerTipo(): String
+}
+
+class Pelicula {
+  -director: String
+  +agregarActor(actor: Actor)
+  +obtenerTipo(): String
+}
+
+class SerieDeTV {
+  -temporadasPlaneadas: int
+  +agregarTemporada(numero: int, episodios: int)
+  +obtenerTipo(): String
+}
+
+class Documental {
+  -tema: String
+  +agregarInvestigador(investigador: Investigador)
+  +obtenerTipo(): String
+}
+
+class Actor {
+  -nombre: String
+  -nacionalidad: String
+}
+
+class Temporada {
+  -numero: int
+  -episodios: int
+}
+
+class Investigador {
+  -nombre: String
+  -institucion: String
+  -especialidad: String
+}
+
+class Cortometraje {
+  -categoria: String
+  -director: String
+}
+
+class VideoYouTube {
+  -canal: String
+  -url: String
+  -visualizaciones: int
+  +sumarVisualizaciones(cantidad: int)
+}
+
+ContenidoAudiovisual <|-- Pelicula
+ContenidoAudiovisual <|-- SerieDeTV
+ContenidoAudiovisual <|-- Documental
+ContenidoAudiovisual <|-- Cortometraje
+ContenidoAudiovisual <|-- VideoYouTube
+Detallable <|.. Pelicula
+Detallable <|.. SerieDeTV
+Detallable <|.. Documental
+Pelicula o-- "0..*" Actor : agregación
+SerieDeTV *-- "0..*" Temporada : composición
+Documental --> "0..*" Investigador : asociación
+@enduml
